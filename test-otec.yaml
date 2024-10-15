@@ -1,0 +1,36 @@
+apiVersion: opentelemetry.io/v1beta1
+kind: OpenTelemetryCollector
+metadata:
+  name: test-config
+spec:
+  config:
+    receivers:
+      otlp:
+        protocols:
+          grpc:
+            endpoint: 0.0.0.0:4317
+          http:
+            endpoint: 0.0.0.0:4318
+
+    processors:
+      batch:
+        send_batch_size: 10000
+        timeout: 10s
+
+    exporters:
+      otlphttp/coroot:
+        endpoint: "http://demo-coroot:8080"
+        encoding: proto
+        headers:
+          "x-api-key": "5aptj2co"
+
+    service:
+      pipelines:
+        traces:
+          receivers: [otlp]
+          processors: [batch]
+          exporters: [otlphttp/coroot]
+        logs:
+          receivers: [otlp]
+          processors: [batch]
+          exporters: [otlphttp/coroot]
