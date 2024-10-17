@@ -28,3 +28,7 @@ spec:
     env:
       - name: OTEL_EXPORTER_OTLP_ENDPOINT
         value: http://test-config-collector:4318
+  java:
+    env:
+      - name: OTEL_EXPORTER_OTLP_ENDPOINT
+        value: http://test-config-collector:4318
